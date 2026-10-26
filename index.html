@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stratiq · Tu inteligencia financiera, sin contratar un analista</title>
+<meta name="description" content="Stratiq convierte los datos de tu empresa en dashboards financieros claros y accionables. Visualización financiera automatizada para PyMEs en México.">
+<meta property="og:title" content="Stratiq · Inteligencia financiera para PyMEs">
+<meta property="og:description" content="Dashboards financieros claros y accionables, sin contratar un analista.">
+<meta name="theme-color" content="#161613">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23161613'/%3E%3Cg transform='translate(9 16) scale(.222)'%3E%3Cpath fill='%23fff' d='M124 0H206L192 34H110Z'/%3E%3Cpath fill='%23adb3bf' d='M47 52H180L166 86H33Z'/%3E%3Cpath fill='%23fff' d='M15 106H96L82 140H1Z'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #161613; --ink-2: #22221e; --cream: #faf8f3; --muted: #a9a699; --faint: #77746a;
+    --line: rgba(255,255,255,.08); --mint: #b6fcb8; --silver: #adb3bf;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+  html { overflow-x: hidden; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    background: var(--ink); color: #d9d6cc; -webkit-font-smoothing: antialiased;
+    min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
+    overflow-x: clip; position: relative;
+  }
+  body::before { /* línea mint superior, como en el dashboard */
+    content: ""; position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 5;
+    background: linear-gradient(90deg, transparent, rgba(182,252,184,.75) 20%, rgba(182,252,184,.75) 80%, transparent);
+  }
+  .bg { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+  .motif { position: absolute; z-index: 0; right: -140px; top: 90px; width: min(620px, 70vw); pointer-events: none; }
+  .motif .a { fill: rgba(255,255,255,.035); }
+  .motif .b { fill: rgba(182,252,184,.07); }
+
+  header, main, footer { position: relative; z-index: 1; width: 100%; max-width: 1160px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
+  header { display: flex; align-items: center; justify-content: space-between; padding-top: 34px; }
+  .brand { display: inline-flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; }
+  .brand svg { width: 38px; height: 26px; }
+  .brand span { font-size: 24px; font-weight: 800; letter-spacing: -.01em; }
+  .soon {
+    font-size: 10.5px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--ink);
+    background: var(--mint); padding: 8px 14px; border-radius: 999px;
+  }
+
+  main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-top: 70px; padding-bottom: 60px; }
+  .pill {
+    align-self: flex-start; display: inline-flex; align-items: center; gap: 9px;
+    padding: 8px 15px 8px 12px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid var(--line);
+    font-size: 10.5px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #cfcbbf;
+  }
+  .pill i { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 4px rgba(182,252,184,.14); }
+  h1 {
+    margin-top: 26px; max-width: 820px; color: var(--cream);
+    font-size: clamp(40px, 6vw, 76px); font-weight: 650; letter-spacing: -.04em; line-height: 1.02;
+  }
+  h1 em { font-style: normal; color: var(--mint); }
+  .lead { margin-top: 24px; max-width: 560px; font-size: 18px; line-height: 1.6; color: var(--muted); }
+
+  .steps { margin-top: 64px; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+  .step { padding: 26px 28px 0 0; }
+  .step + .step { padding-left: 28px; border-left: 1px solid var(--line); }
+  .step .n { font-size: 12px; font-weight: 700; letter-spacing: .14em; color: var(--mint); }
+  .step h2 { margin-top: 12px; font-size: 18px; font-weight: 650; color: #f1efe8; letter-spacing: -.01em; }
+  .step p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #8f8c80; }
+
+  footer { display: flex; justify-content: space-between; gap: 16px; padding-top: 24px; padding-bottom: 32px; font-size: 12.5px; color: var(--faint); border-top: 1px solid var(--line); }
+  footer i { font-style: italic; color: #cfcbbf; }
+  footer .s { color: var(--mint); font-weight: 600; }
+
+  .reveal { opacity: 0; transform: translateY(10px); animation: in .7s cubic-bezier(.2,.7,.2,1) forwards; }
+  .d1 { animation-delay: .05s; } .d2 { animation-delay: .15s; } .d3 { animation-delay: .25s; } .d4 { animation-delay: .4s; }
+  @keyframes in { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .reveal { animation: none; opacity: 1; transform: none; } }
+
+  @media (max-width: 760px) {
+    header, main, footer { padding-left: 20px; padding-right: 20px; }
+    header { padding-top: 24px; }
+    .brand span { font-size: 21px; }
+    .brand svg { width: 32px; height: 22px; }
+    main { padding-top: 48px; padding-bottom: 40px; }
+    .lead { font-size: 16px; }
+    .steps { grid-template-columns: 1fr; margin-top: 44px; }
+    .step, .step + .step { padding: 20px 0; border-left: 0; }
+    .step + .step { border-top: 1px solid var(--line); }
+    .motif { right: -120px; top: 70px; width: 340px; }
+    footer { flex-direction: column; gap: 6px; }
+    .pill { font-size: 9.5px; letter-spacing: .14em; }
+  }
+</style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"><svg class="motif" viewBox="0 0 207 141" aria-hidden="true"><path class="a" d="M124 0H206L192 34H110Z"/><path class="b" d="M47 52H180L166 86H33Z"/><path class="a" d="M15 106H96L82 140H1Z"/></svg></div>
+
+  <header class="reveal d1">
+    <a class="brand" href="/" aria-label="Stratiq">
+      <svg viewBox="0 0 207 141" aria-hidden="true"><path fill="#fff" d="M124 0H206L192 34H110Z"/><path fill="#adb3bf" d="M47 52H180L166 86H33Z"/><path fill="#fff" d="M15 106H96L82 140H1Z"/></svg>
+      <span>Stratiq</span>
+    </a>
+    <span class="soon">Muy pronto</span>
+  </header>
+
+  <main>
+    <span class="pill reveal d2"><i></i>Visualización financiera automatizada</span>
+    <h1 class="reveal d2">Tu inteligencia financiera, <em>sin contratar un analista.</em></h1>
+    <p class="lead reveal d3">Convertimos los datos de tu empresa en dashboards claros y accionables, para que dirección decida con números, no con intuición.</p>
+
+    <section class="steps reveal d4" aria-label="Cómo funciona">
+      <div class="step">
+        <p class="n">01</p>
+        <h2>Importa tus datos</h2>
+        <p>Tus exportaciones de CONTPAQi y Excel, tal como ya las tienes.</p>
+      </div>
+      <div class="step">
+        <p class="n">02</p>
+        <h2>Procesa sin intervención</h2>
+        <p>Limpiamos, estructuramos y calculamos los KPIs clave por periodo, producto y línea de negocio.</p>
+      </div>
+      <div class="step">
+        <p class="n">03</p>
+        <h2>Visualiza y decide</h2>
+        <p>Dashboards comparativos listos para dirección, sin equipo de TI ni analista dedicado.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>StratiQ · <i>Keep it</i> <span class="s">simple.</span></span>
+    <span>Monterrey, México · stratiq.mx</span>
+  </footer>
+</body>
+</html>
