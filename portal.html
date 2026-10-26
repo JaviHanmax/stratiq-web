@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#161613">
+<title>Stratiq · Portal de clientes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23161613'/%3E%3Cg transform='translate(9 16) scale(.222)'%3E%3Cpath fill='%23fff' d='M124 0H206L192 34H110Z'/%3E%3Cpath fill='%23adb3bf' d='M47 52H180L166 86H33Z'/%3E%3Cpath fill='%23fff' d='M15 106H96L82 140H1Z'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #161613; --ink-700: #22221e; --body: #2c2c26; --muted: #6b6a60; --faint: #9c9a8d;
+    --line: #e7e3d9; --bg: #faf8f3; --tint: #f2efe6; --card: #fff;
+    --mint: #b6fcb8; --mint-deep: #1f9d57; --mint-ink: #1d5c38; --mint-bg: #eafaea; --mint-line: #cdeecf;
+    --silver: #adb3bf; --silver-2: #d9d4c6;
+    --red: #b23b2e; --red-bg: #f7ece8; --red-line: #e7d4cd; --amber-ink: #795900;
+    --ease: cubic-bezier(.2,.7,.2,1);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; padding: 0; }
+  body { font-family: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; color: var(--body); background: var(--bg); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; background: none; border: 0; }
+  [hidden] { display: none !important; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 6px; }
+
+  .shell { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); min-height: 100vh; min-height: 100dvh; }
+
+  /* Panel de marca */
+  .side { position: relative; overflow: hidden; isolation: isolate; background: var(--ink); color: #d9d6cc; padding: 44px 56px 40px; display: flex; flex-direction: column; }
+  .side::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, transparent, rgba(182,252,184,.7) 30%, rgba(182,252,184,.7) 70%, transparent); }
+  .motif { position: absolute; z-index: -1; right: -150px; top: 24px; width: 460px; max-width: 80%; }
+  .motif .a { fill: rgba(255,255,255,.035); } .motif .b { fill: rgba(182,252,184,.07); }
+  .brand { display: inline-flex; align-items: center; gap: 11px; align-self: flex-start; }
+  .brand svg { width: 34px; height: 23px; }
+  .brand span { font-size: 22px; font-weight: 800; letter-spacing: -.01em; color: #fff; }
+  .hero { margin: auto 0; padding: 48px 0; max-width: 560px; }
+  .pill { display: inline-flex; align-items: center; gap: 9px; padding: 7px 14px 7px 12px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); font-size: 10.5px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #cfcbbf; }
+  .pill i { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 4px rgba(182,252,184,.14); }
+  .hero h1 { margin-top: 26px; color: #faf8f3; font-size: clamp(36px, 3.6vw, 56px); font-weight: 650; letter-spacing: -.035em; line-height: 1.04; }
+  .hero h1 em { font-style: normal; color: var(--mint); }
+  .hero p { margin-top: 20px; font-size: 16.5px; line-height: 1.6; color: #a9a699; max-width: 440px; }
+  .trust { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(255,255,255,.08); }
+  .trust li { padding: 20px 18px 0 0; display: grid; grid-template-columns: auto 1fr; column-gap: 10px; row-gap: 3px; align-content: start; }
+  .trust li + li { padding-left: 18px; border-left: 1px solid rgba(255,255,255,.08); }
+  .trust svg { width: 17px; height: 17px; color: var(--mint); grid-row: span 2; margin-top: 1px; }
+  .trust b { font-size: 13px; font-weight: 600; color: #f1efe8; }
+  .trust span { font-size: 12.5px; color: #8f8c80; line-height: 1.45; }
+  .side-foot { margin-top: 30px; display: flex; justify-content: space-between; font-size: 12px; color: #77746a; }
+  .side-foot i { font-style: italic; color: #cfcbbf; }
+  .side-foot .s { color: var(--mint); }
+  .side-foot a:hover { color: #cfcbbf; }
+
+  /* Formulario */
+  .main { display: flex; flex-direction: column; padding: 40px 32px; }
+  form { width: 100%; max-width: 400px; margin: auto; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); }
+  form h2 { font-size: 34px; font-weight: 700; letter-spacing: -.03em; color: var(--ink); margin-top: 12px; line-height: 1.1; }
+  .lead { margin: 10px 0 30px; font-size: 15px; color: var(--muted); }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 600; color: var(--body); margin-bottom: 7px; }
+  .input { width: 100%; height: 50px; padding: 0 16px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; font-size: 15.5px; color: var(--ink); transition: border-color .15s, box-shadow .15s; }
+  .input::placeholder { color: #b3b0a4; }
+  .input:hover { border-color: var(--silver-2); }
+  .input:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 4px rgba(182,252,184,.6); }
+  .input[aria-invalid="true"] { border-color: var(--red); }
+  .pw { position: relative; }
+  .pw .input { padding-right: 52px; }
+  .pw-toggle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 9px; display: grid; place-items: center; color: var(--muted); }
+  .pw-toggle:hover { background: var(--tint); color: var(--ink); }
+  .pw-toggle svg { width: 19px; height: 19px; }
+  .caps { font-size: 12.5px; color: var(--amber-ink); margin: -6px 0 14px; }
+  .alert { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 11px; font-size: 13.5px; line-height: 1.45; margin-bottom: 18px; border: 1px solid var(--red-line); background: var(--red-bg); color: var(--red); }
+  .alert svg { width: 17px; height: 17px; flex: 0 0 auto; margin-top: 1px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%; height: 52px; border-radius: 12px; background: var(--ink); color: #fff; font-size: 15px; font-weight: 600; transition: background .18s, transform .18s, box-shadow .18s; }
+  .btn:hover { background: var(--ink-700); box-shadow: 0 8px 20px rgba(22,22,19,.18); transform: translateY(-1px); }
+  .btn .arrow { width: 16px; height: 16px; color: var(--mint); transition: transform .2s var(--ease); }
+  .btn:hover .arrow { transform: translateX(3px); }
+  .btn[disabled] { opacity: .75; cursor: progress; transform: none; box-shadow: none; }
+  .spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255,255,255,.25); border-top-color: var(--mint); animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .help { margin-top: 22px; font-size: 13px; color: var(--muted); text-align: center; line-height: 1.55; }
+  .help b { color: var(--body); font-weight: 600; }
+  .legal { text-align: center; font-size: 12px; color: var(--faint); }
+  .legal a:hover { color: var(--ink); }
+
+  @media (max-width: 960px) {
+    .shell { grid-template-columns: 1fr; }
+    .side { padding: 26px 20px 30px; }
+    .side::after { top: auto; left: 0; width: auto; height: 2px; background: linear-gradient(90deg, transparent, rgba(182,252,184,.7) 30%, rgba(182,252,184,.7) 70%, transparent); }
+    .hero { padding: 34px 0 6px; }
+    .hero h1 { font-size: 32px; }
+    .hero p { font-size: 15px; margin-top: 14px; }
+    .trust, .side-foot { display: none; }
+    .motif { width: 300px; right: -90px; top: auto; bottom: -30px; }
+    .main { padding: 34px 20px 28px; }
+    form h2 { font-size: 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <section class="side" aria-label="Stratiq">
+    <a class="brand" href="/" aria-label="Stratiq — inicio">
+      <svg viewBox="0 0 207 141" aria-hidden="true"><path fill="#fff" d="M124 0H206L192 34H110Z"/><path fill="#adb3bf" d="M47 52H180L166 86H33Z"/><path fill="#fff" d="M15 106H96L82 140H1Z"/></svg>
+      <span>Stratiq</span>
+    </a>
+
+    <div class="hero">
+      <span class="pill"><i></i>Portal de clientes</span>
+      <h1>Tus números, claros y <em>en un solo lugar.</em></h1>
+      <p>Consulta los dashboards que Stratiq prepara para tu empresa, cuando los necesites y desde cualquier dispositivo.</p>
+    </div>
+
+    <ul class="trust">
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        <b>Conexión cifrada</b><span>Todo viaja protegido por HTTPS.</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4-8 4-8-4 8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/></svg>
+        <b>Espacio exclusivo</b><span>Cada empresa ve solo su información.</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <b>Cierre automático</b><span>La sesión expira por inactividad.</span>
+      </li>
+    </ul>
+
+    <div class="side-foot"><span>StratiQ · <i>Keep it</i> <span class="s">simple.</span></span><a href="/">stratiq.mx</a></div>
+
+    <svg class="motif" viewBox="0 0 207 141" aria-hidden="true"><path class="a" d="M124 0H206L192 34H110Z"/><path class="b" d="M47 52H180L166 86H33Z"/><path class="a" d="M15 106H96L82 140H1Z"/></svg>
+  </section>
+
+  <main class="main">
+    <!-- Este formulario no envía datos a ningún lado. Cuando el portal esté en el servidor,
+         el botón "Portal de clientes" de la página principal apuntará a portal.stratiq.mx. -->
+    <form id="login" novalidate autocomplete="off">
+      <p class="eyebrow">Acceso seguro</p>
+      <h2>Inicia sesión</h2>
+      <p class="lead">Usa el usuario y la contraseña que te entregó Stratiq.</p>
+
+      <div class="field">
+        <label for="username">Usuario</label>
+        <input class="input" id="username" type="text" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="64" placeholder="ej. minegocio.direccion">
+      </div>
+
+      <div class="field">
+        <label for="password">Contraseña</label>
+        <div class="pw">
+          <input class="input" id="password" type="password" maxlength="256" placeholder="••••••••••••">
+          <button class="pw-toggle" type="button" aria-label="Mostrar contraseña" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <p class="caps" id="caps" hidden>Bloq Mayús está activado</p>
+
+      <div class="alert" id="error" role="alert" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+        <span id="error-text"></span>
+      </div>
+
+      <button class="btn" id="submit" type="submit">
+        <span class="label">Entrar</span>
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+
+      <p class="help">¿Olvidaste tu contraseña?<br><b>Contacta a tu asesor de Stratiq</b> para restablecerla.</p>
+    </form>
+    <p class="legal"><a href="/">← Volver a stratiq.mx</a></p>
+  </main>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('login');
+  var user = document.getElementById('username');
+  var pass = document.getElementById('password');
+  var btn = document.getElementById('submit');
+  var label = btn.querySelector('.label');
+  var arrow = btn.querySelector('.arrow');
+  var err = document.getElementById('error');
+  var errText = document.getElementById('error-text');
+  var caps = document.getElementById('caps');
+  var toggle = document.querySelector('.pw-toggle');
+
+  toggle.addEventListener('click', function () {
+    var show = pass.type === 'password';
+    pass.type = show ? 'text' : 'password';
+    toggle.setAttribute('aria-pressed', String(show));
+    toggle.setAttribute('aria-label', show ? 'Ocultar contraseña' : 'Mostrar contraseña');
+    pass.focus();
+  });
+  function capsCheck(e) { if (e.getModifierState) caps.hidden = !e.getModifierState('CapsLock'); }
+  pass.addEventListener('keydown', capsCheck);
+  pass.addEventListener('keyup', capsCheck);
+  pass.addEventListener('blur', function () { caps.hidden = true; });
+  [user, pass].forEach(function (i) { i.addEventListener('input', function () { i.removeAttribute('aria-invalid'); }); });
+
+  function show(msg) { errText.textContent = msg; err.hidden = false; }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();               // nada se envía a ningún servidor
+    err.hidden = true;
+    var u = user.value.trim(), p = pass.value;
+    if (!u || !p) {
+      if (!u) user.setAttribute('aria-invalid', 'true');
+      if (!p) pass.setAttribute('aria-invalid', 'true');
+      show('Escribe tu usuario y tu contraseña.');
+      (u ? pass : user).focus();
+      return;
+    }
+    btn.disabled = true; label.textContent = 'Verificando…'; arrow.hidden = true;
+    var sp = document.createElement('span'); sp.className = 'spinner'; btn.appendChild(sp);
+    setTimeout(function () {
+      pass.value = '';
+      btn.disabled = false; label.textContent = 'Entrar'; arrow.hidden = false; sp.remove();
+      show('No encontramos una cuenta activa con esos datos. Si eres cliente de Stratiq, contacta a tu asesor.');
+      pass.focus();
+    }, 900);
+  });
+
+  user.focus();
+})();
+</script>
+</body>
+</html>

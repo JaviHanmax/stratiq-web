@@ -40,10 +40,16 @@
   .brand { display: inline-flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; }
   .brand svg { width: 38px; height: 26px; }
   .brand span { font-size: 24px; font-weight: 800; letter-spacing: -.01em; }
-  .soon {
-    font-size: 10.5px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--ink);
-    background: var(--mint); padding: 8px 14px; border-radius: 999px;
+  .cta {
+    display: inline-flex; align-items: center; gap: 9px; height: 42px; padding: 0 18px; border-radius: 11px;
+    background: var(--mint); color: var(--ink); text-decoration: none;
+    font-size: 14px; font-weight: 650; letter-spacing: -.005em;
+    transition: transform .18s, box-shadow .18s, background .18s;
   }
+  .cta svg { width: 16px; height: 16px; transition: transform .2s; }
+  .cta:hover { background: #c8ffca; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(182,252,184,.18); }
+  .cta:hover svg { transform: translateX(3px); }
+  .cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
   main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-top: 70px; padding-bottom: 60px; }
   .pill {
@@ -80,6 +86,7 @@
     header { padding-top: 24px; }
     .brand span { font-size: 21px; }
     .brand svg { width: 32px; height: 22px; }
+    .cta { height: 38px; padding: 0 13px; font-size: 13px; }
     main { padding-top: 48px; padding-bottom: 40px; }
     .lead { font-size: 16px; }
     .steps { grid-template-columns: 1fr; margin-top: 44px; }
@@ -99,7 +106,10 @@
       <svg viewBox="0 0 207 141" aria-hidden="true"><path fill="#fff" d="M124 0H206L192 34H110Z"/><path fill="#adb3bf" d="M47 52H180L166 86H33Z"/><path fill="#fff" d="M15 106H96L82 140H1Z"/></svg>
       <span>Stratiq</span>
     </a>
-    <span class="soon">Muy pronto</span>
+    <a class="cta" href="/portal">
+      Portal de clientes
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
   </header>
 
   <main>
